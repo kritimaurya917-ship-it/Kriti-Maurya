@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kriti — Visual Inspiration</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,Helvetica,sans-serif;background:#fff;color:#222}
+header{height:72px;display:flex;align-items:center;gap:22px;padding:10px 24px;position:sticky;top:0;background:#fff;z-index:10;border-bottom:1px solid #eee}
+.logo{font-size:25px;font-weight:800;color:#e60023;letter-spacing:-1px}
+.nav{display:flex;gap:18px;font-weight:600}
+.nav a{color:#222;text-decoration:none}
+.search{flex:1;background:#f1f1f1;border-radius:28px;padding:14px 20px;border:0;outline:0;font-size:15px}
+.profile{width:42px;height:42px;border-radius:50%;background:#222;color:#fff;display:grid;place-items:center;font-weight:700}
+.hero{text-align:center;padding:42px 20px 28px}
+.hero h1{font-size:42px;margin-bottom:10px}
+.hero p{color:#777;font-size:16px}
+.chips{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:10px 20px 28px}
+.chips button{border:0;border-radius:22px;padding:10px 17px;background:#f2f2f2;font-weight:600;cursor:pointer}
+.chips button.active,.chips button:hover{background:#222;color:#fff}
+.grid{columns:5 220px;column-gap:16px;padding:0 22px 40px}
+.card{break-inside:avoid;margin-bottom:16px;border-radius:18px;overflow:hidden;background:#f5f5f5;position:relative;cursor:pointer}
+.card img{width:100%;display:block;transition:.25s}
+.card:hover img{transform:scale(1.025)}
+.overlay{position:absolute;inset:auto 0 0;padding:28px 16px 15px;color:white;background:linear-gradient(transparent,rgba(0,0,0,.7));opacity:0;transition:.2s}
+.card:hover .overlay{opacity:1}
+.save{position:absolute;right:12px;top:12px;background:#e60023;color:white;border:0;border-radius:22px;padding:10px 14px;font-weight:700}
+@media(max-width:800px){.nav{display:none}.hero h1{font-size:32px}.grid{columns:3 170px}}
+@media(max-width:520px){header{padding:10px 14px;gap:10px}.logo{font-size:22px}.profile{width:36px;height:36px}.grid{columns:2 130px;padding:0 10px}.hero{padding-top:30px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">Kriti.</div>
+  <nav class="nav"><a href="#">Home</a><a href="#">Explore</a><a href="#">Create</a></nav>
+  <input class="search" placeholder="Search ideas, style, travel, design..." oninput="searchCards(this.value)">
+  <div class="profile">K</div>
+</header>
+
+<section class="hero">
+  <h1>Ideas made for Kriti ✨</h1>
+  <p>Your personal space for inspiration, creativity and beautiful ideas.</p>
+</section>
+
+<div class="chips">
+  <button class="active" onclick="filterCards('all',this)">All</button>
+  <button onclick="filterCards('travel',this)">Travel</button>
+  <button onclick="filterCards('fashion',this)">Fashion</button>
+  <button onclick="filterCards('design',this)">Design</button>
+  <button onclick="filterCards('drone',this)">Drone & Tech</button>
+  <button onclick="filterCards('study',this)">Study</button>
+</div>
+
+<main class="grid" id="grid">
+  <article class="card" data-cat="travel" data-title="travel mountains"><img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=700&q=80"><button class="save">Save</button><div class="overlay">Mountain escapes</div></article>
+  <article class="card" data-cat="fashion" data-title="fashion outfit"><img src="https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=700&q=80"><button class="save">Save</button><div class="overlay">Style inspiration</div></article>
+  <article class="card" data-cat="design" data-title="design workspace"><img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=700&q=80"><button class="save">Save</button><div class="overlay">Creative workspace</div></article>
+  <article class="card" data-cat="drone" data-title="drone technology"><img src="https://images.unsplash.com/photo-1473968512647-3e447244af8f?auto=format&fit=crop&w=700&q=80"><button class="save">Save</button><div class="overlay">Drone & technology</div></article>
+  <article class="card" data-cat="study" data-title="study desk notes"><img src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=700&q=80"><button class="save">Save</button><div class="overlay">Study motivation</div></article>
+  <article class="card" data-cat="travel" data-title="beach travel"><img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=700&q=80"><button class="save">Save</button><div class="overlay">Beach mood</div></article>
+  <article class="card" data-cat="design" data-title="architecture design"><img src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&w=700&q=80"><button class="save">Save</button><div class="overlay">Architecture ideas</div></article>
+  <article class="card" data-cat="fashion" data-title="fashion aesthetic"><img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=700&q=80"><button class="save">Save</button><div class="overlay">Everyday aesthetic</div></article>
+</main>
+
+<script>
+function filterCards(cat,btn){
+ document.querySelectorAll('.chips button').forEach(b=>b.classList.remove('active'));
+ btn.classList.add('active');
+ document.querySelectorAll('.card').forEach(c=>c.style.display=(cat==='all'||c.dataset.cat===cat)?'inline-block':'none');
+}
+function searchCards(q){
+ q=q.toLowerCase();
+ document.querySelectorAll('.card').forEach(c=>{
+   c.style.display=c.dataset.title.includes(q)?'inline-block':'none';
+ });
+}
+document.querySelectorAll('.save').forEach(b=>b.onclick=e=>{
+ e.stopPropagation(); b.textContent=b.textContent==='Save'?'Saved':'Save';
+});
+</script>
+</body>
+</html>
